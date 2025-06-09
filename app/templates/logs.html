@@ -18,7 +18,7 @@
           <tr>
             <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             <td>{{ log.item_name or '—' }}</td>
-            <td>{{ log.item_description or '—' }}</td>
+            <td>{{ log.action or '—' }}</td>
           </tr>
         {% endfor %}
       </tbody>

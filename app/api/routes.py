@@ -27,6 +27,6 @@ def get_logs():
         'action': lg.action,
         'item_id': lg.item_id,
         'item_name': lg.item_name,
-        'item_description': lg.item_description,
+        'item_description': 'action_type',
         'timestamp': lg.timestamp.isoformat()
     } for lg in logs])

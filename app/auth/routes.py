@@ -5,7 +5,6 @@ from app.extensions import db
 from app.models import User, Item, LogEntry
 from .forms import RegistrationForm, LoginForm, ItemForm
 from . import auth_bp
-from app.decorators import require_api_key
 
 
 api_bp = Blueprint('api', __name__)
@@ -42,7 +41,7 @@ def add_item():
 
         # Добавляем запись в логи
         log_entry = LogEntry(
-            action=f"Удалён предмет: {item.name}",
+            action=f"Добавлен предмет: {item.name}",
             item_id=item.id,
             item_name=item.name,
             item_description=item.description,
@@ -73,8 +72,10 @@ def edit_item(item_id):
         db.session.commit()
 
         log_entry = LogEntry(
-            action=f"Изменён предмет: {old_name} → {item.name}",
+            action="Изменён предмет",
             item_id=item.id,
+            item_name=item.name,
+            item_description=f"{old_name} → {item.name}",
             timestamp=datetime.utcnow(),
             user_id=current_user.id
         )
@@ -155,13 +156,13 @@ def logout():
 @login_required
 def items():
     # Передаем список предметов в шаблон
-    items = Item.query.all()
+    items = Item.query.filter_by(user_id=current_user.id).all()
     return render_template('items.html', items=items)
 
 
 @auth_bp.route('/logs')
 @login_required
 def logs():
-    logs = LogEntry.query.order_by(LogEntry.timestamp.desc()).all()
+    logs = LogEntry.query.filter_by(user_id=current_user.id).order_by(LogEntry.timestamp.desc()).all()
     return render_template('logs.html', logs=logs)
 

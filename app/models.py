@@ -5,7 +5,6 @@ from flask_login import UserMixin
 from .extensions import db, login_manager
 
 
-# Flask-Login user loader
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -58,12 +57,16 @@ class LogEntry(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     action = db.Column(db.String(100), nullable=False)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=True)  # теперь nullable
+    item_id = db.Column(
+        db.Integer,
+        db.ForeignKey('item.id', ondelete='SET NULL'),
+        nullable=True
+    )
     item_name = db.Column(db.String(255), nullable=True)
     item_description = db.Column(db.Text, nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    item = db.relationship('Item')
+    item = db.relationship('Item', passive_deletes=True)
 
 

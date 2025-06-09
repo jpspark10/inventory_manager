@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Управление API ключом</h2>
+
+  {% if api_key %}
+    <p><strong>Текущий API ключ:</strong> <code>{{ api_key }}</code></p>
+    <p>Действителен до: {{ expiration.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    <a href="{{ url_for('auth.api_key', generate=1) }}" class="btn btn-primary">Сгенерировать новый ключ</a>
+  {% else %}
+    <p>У вас еще нет API ключа.</p>
+    <a href="{{ url_for('auth.api_key', generate=1) }}" class="btn btn-primary">Создать API ключ</a>
+  {% endif %}
+{% endblock %}

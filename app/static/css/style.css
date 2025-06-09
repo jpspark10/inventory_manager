@@ -1,0 +1,15 @@
+body {
+    padding-top: 60px;
+    font-family: Arial, sans-serif;
+}
+
+/* Стили для флэш-сообщений */
+.alert {
+    margin: 1rem auto;
+    max-width: 600px;
+}
+
+/* Ограничение ширины форм */
+.form-control {
+    max-width: 400px;
+}

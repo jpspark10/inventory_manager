@@ -19,7 +19,7 @@
 
 ```bash
 sudo apt update && sudo apt install python3-venv git -y
-git clone https://github.com/your-username/inventory-manager.git
+git clone https://github.com/jpspark10/inventory-manager.git
 cd inventory-manager
 python3 -m venv venv
 source venv/bin/activate
